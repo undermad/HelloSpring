@@ -7,6 +7,9 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!--LOAD PROPERTIES-->
+    <context:property-placeholder location="classpath:coach.properties"/>
+
     <!--LOGGING BEAN-->
     <bean id="myLoggerConfig" class="demo.spring.MyLoggerConfig" init-method="initLogger">
         <property name="rootLoggerLevel" value="FINE"/>
@@ -32,6 +35,20 @@
           class="demo.spring.BodyBuildingCoach">
         <!--Dependency Constructors-->
         <constructor-arg ref="myFortune"/>
+    </bean>
+
+    <bean id="wowCoach"
+          class="demo.spring.WowCoach">
+        <!--Setter Injection-->
+        <property name="fortuneService" ref="myFortune"/>
+    </bean>
+
+    <bean id="wowCoachEctimel"
+          class="demo.spring.WowCoach">
+        <property name="team" value="${ectimel.team}"/>
+        <property name="email" value="${ectimel.email}"/>
+        <property name="name" value="${ectimel.name}"/>
+
     </bean>
 
 

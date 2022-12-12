@@ -15,7 +15,14 @@ public class SpringHelloApp {
         System.out.println(theCoach.getDailyFortune());
         System.out.println(theCoach.getDailyCoach());
 
+        Coach wowCoach = context.getBean("wowCoach", WowCoach.class);
+        System.out.println(wowCoach.getDailyCoach());
+        System.out.println(wowCoach.getDailyFortune());
+
+        Coach wowCoachEctimel = context.getBean("wowCoachEctimel", WowCoach.class);
+        System.out.println(wowCoachEctimel.toString());
 
 
+        context.close();
     }
 }
