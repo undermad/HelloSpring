@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--LOGGING BEAN-->
+    <bean id="myLoggerConfig" class="demo.spring.MyLoggerConfig" init-method="initLogger">
+        <property name="rootLoggerLevel" value="FINE"/>
+        <property name="printedLoggerLevel" value="FINE"/>
+    </bean>
+    <!--LOGGING BEAN-->
+    <!--Bean created to handle destroy method in prototype scoped bean.
+        Prototype scoped bean must implement DisposableBean interface!!!-->
+    <bean id="customProcessor"
+          class="demo.spring.MyCustomBeanProcessor"/>
+
+
+    <!--Define dependency-->
+
+    <bean id="myFortune"
+          class="demo.spring.HappyDayFortune">
+    </bean>
+
+
+    <!-- Define your beans here -->
+    <bean id="theCoach"
+          class="demo.spring.BaseballCoach"
+          scope="singleton"
+          init-method="doOnCreate"
+          destroy-method="doOnDestroy">
+        <!--prototype scope beans doesn't call destroy method - custom code is required
+            note that if there is bean with singleton scope and also implement destroy method
+            in configuration file destroy method from DisposableBean interface and custom destroy
+            method will be called together-->
+        <!--Dependency Constructors-->
+        <constructor-arg ref="myFortune"/>
+    </bean>
+
+    <bean id="baseballCoachWithCustomDestroyMethod"
+          class="demo.spring.BaseballCoach"
+          scope="prototype"
+          init-method="doOnCreate">
+        <constructor-arg ref="myFortune"/>
+    </bean>
+
+
+</beans>
+
+
+
+
+
